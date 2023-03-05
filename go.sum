@@ -2,8 +2,11 @@ github.com/golang/protobuf v1.5.0/go.mod h1:FsONVRAS9T7sI+LIUmWTfcYkHO4aIWwzhcaS
 github.com/golang/protobuf v1.5.2 h1:ROPKBNFfQgOUMifHyP+KYbvpjbdoFNs+aK7DXlji0Tw=
 github.com/golang/protobuf v1.5.2/go.mod h1:XVQd3VNwM+JqD3oG2Ue2ip4fOMUkwXdXDdiuN0vRsmY=
 github.com/google/go-cmp v0.5.5/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
+github.com/google/go-cmp v0.5.9 h1:O2Tfq5qg4qc4AmwVlvv0oLiVAGB7enBSJ2x2DqQFi38=
 github.com/taaaaakahiro/golang_grpc_proto v0.0.0-20230304092836-d4562b117e72 h1:KcXdfB+YZMREFAR+y3NwNR/CFCizHbbZBz2Yg6KkMmU=
 github.com/taaaaakahiro/golang_grpc_proto v0.0.0-20230304092836-d4562b117e72/go.mod h1:uq+JX/EeeJMQVTkiJ/RcAkjmGYmBqZnNYyXA/wU1yJI=
+github.com/taaaaakahiro/golang_private_repo v0.0.0-20230305050013-06cda51471e5 h1:gXeA+kalUSkmDDuZNowQfX/6KLS7crrpwwCnR/PFpqs=
+github.com/taaaaakahiro/golang_private_repo v0.0.0-20230305050013-06cda51471e5/go.mod h1:k3dcIWwn2KURkvDXFaVrav949uyAtgThGGsqyXtYNjk=
 golang.org/x/net v0.5.0 h1:GyT4nK/YDHSqa1c4753ouYCDajOYKTja9Xb/OHtgvSw=
 golang.org/x/net v0.5.0/go.mod h1:DivGGAXEgPSlEBzxGzZI+ZLohi+xUj054jfeKui00ws=
 golang.org/x/sys v0.4.0 h1:Zr2JFtRQNX3BCZ8YtxRE9hNJYC8J6I1MVbMg6owUp18=

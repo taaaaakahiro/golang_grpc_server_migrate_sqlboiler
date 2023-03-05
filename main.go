@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	pb "github.com/taaaaakahiro/golang_grpc_proto/pb/proto"
+	"github.com/taaaaakahiro/golang_private_repo/pkg"
 )
 
 func main() {
@@ -14,5 +15,6 @@ func main() {
 	if err != nil {
 		return
 	}
+	pkg.GetPrivateRepo()
 	res.GetClientId()
 }
