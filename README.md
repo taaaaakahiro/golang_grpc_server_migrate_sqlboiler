@@ -1,5 +1,4 @@
 
-<<<<<<< HEAD
 ## init
 ```sh
 # ローカルにプライベートリポジトリをgo getするため 
@@ -22,5 +21,3 @@ $ go env -w GOPRIVATE="github.com/<アカウント名>/*"
 [url "https://ghp_XXXX:x-oauth-basic@github.com"]
     insteadOf = https://github.com
 ```
-=======
->>>>>>> 93da2ae342456d000e53c28f10fbceda6e343c47
