@@ -10,4 +10,4 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
     volumes:
-      - ./testfixtures:/docker-entrypoint-initdb.d
+      - ./test_fixtures:/docker-entrypoint-initdb.d

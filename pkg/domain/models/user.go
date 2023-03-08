@@ -22,16 +22,16 @@ import (
 	"github.com/volatiletech/strmangle"
 )
 
-// Book is an object representing the database table.
-type Book struct {
+// User is an object representing the database table.
+type User struct {
 	ID   int         `boil:"id" json:"id" toml:"id" yaml:"id"`
 	Name null.String `boil:"name" json:"name,omitempty" toml:"name" yaml:"name,omitempty"`
 
-	R *bookR `boil:"-" json:"-" toml:"-" yaml:"-"`
-	L bookL  `boil:"-" json:"-" toml:"-" yaml:"-"`
+	R *userR `boil:"-" json:"-" toml:"-" yaml:"-"`
+	L userL  `boil:"-" json:"-" toml:"-" yaml:"-"`
 }
 
-var BookColumns = struct {
+var UserColumns = struct {
 	ID   string
 	Name string
 }{
@@ -39,12 +39,12 @@ var BookColumns = struct {
 	Name: "name",
 }
 
-var BookTableColumns = struct {
+var UserTableColumns = struct {
 	ID   string
 	Name string
 }{
-	ID:   "book.id",
-	Name: "book.name",
+	ID:   "user.id",
+	Name: "user.name",
 }
 
 // Generated where
@@ -110,61 +110,61 @@ func (w whereHelpernull_String) NIN(slice []string) qm.QueryMod {
 func (w whereHelpernull_String) IsNull() qm.QueryMod    { return qmhelper.WhereIsNull(w.field) }
 func (w whereHelpernull_String) IsNotNull() qm.QueryMod { return qmhelper.WhereIsNotNull(w.field) }
 
-var BookWhere = struct {
+var UserWhere = struct {
 	ID   whereHelperint
 	Name whereHelpernull_String
 }{
-	ID:   whereHelperint{field: "\"book\".\"id\""},
-	Name: whereHelpernull_String{field: "\"book\".\"name\""},
+	ID:   whereHelperint{field: "\"user\".\"id\""},
+	Name: whereHelpernull_String{field: "\"user\".\"name\""},
 }
 
-// BookRels is where relationship names are stored.
-var BookRels = struct {
+// UserRels is where relationship names are stored.
+var UserRels = struct {
 }{}
 
-// bookR is where relationships are stored.
-type bookR struct {
+// userR is where relationships are stored.
+type userR struct {
 }
 
 // NewStruct creates a new relationship struct
-func (*bookR) NewStruct() *bookR {
-	return &bookR{}
+func (*userR) NewStruct() *userR {
+	return &userR{}
 }
 
-// bookL is where Load methods for each relationship are stored.
-type bookL struct{}
+// userL is where Load methods for each relationship are stored.
+type userL struct{}
 
 var (
-	bookAllColumns            = []string{"id", "name"}
-	bookColumnsWithoutDefault = []string{"id"}
-	bookColumnsWithDefault    = []string{"name"}
-	bookPrimaryKeyColumns     = []string{"id"}
-	bookGeneratedColumns      = []string{}
+	userAllColumns            = []string{"id", "name"}
+	userColumnsWithoutDefault = []string{"id"}
+	userColumnsWithDefault    = []string{"name"}
+	userPrimaryKeyColumns     = []string{"id"}
+	userGeneratedColumns      = []string{}
 )
 
 type (
-	// BookSlice is an alias for a slice of pointers to Book.
-	// This should almost always be used instead of []Book.
-	BookSlice []*Book
-	// BookHook is the signature for custom Book hook methods
-	BookHook func(context.Context, boil.ContextExecutor, *Book) error
+	// UserSlice is an alias for a slice of pointers to User.
+	// This should almost always be used instead of []User.
+	UserSlice []*User
+	// UserHook is the signature for custom User hook methods
+	UserHook func(context.Context, boil.ContextExecutor, *User) error
 
-	bookQuery struct {
+	userQuery struct {
 		*queries.Query
 	}
 )
 
 // Cache for insert, update and upsert
 var (
-	bookType                 = reflect.TypeOf(&Book{})
-	bookMapping              = queries.MakeStructMapping(bookType)
-	bookPrimaryKeyMapping, _ = queries.BindMapping(bookType, bookMapping, bookPrimaryKeyColumns)
-	bookInsertCacheMut       sync.RWMutex
-	bookInsertCache          = make(map[string]insertCache)
-	bookUpdateCacheMut       sync.RWMutex
-	bookUpdateCache          = make(map[string]updateCache)
-	bookUpsertCacheMut       sync.RWMutex
-	bookUpsertCache          = make(map[string]insertCache)
+	userType                 = reflect.TypeOf(&User{})
+	userMapping              = queries.MakeStructMapping(userType)
+	userPrimaryKeyMapping, _ = queries.BindMapping(userType, userMapping, userPrimaryKeyColumns)
+	userInsertCacheMut       sync.RWMutex
+	userInsertCache          = make(map[string]insertCache)
+	userUpdateCacheMut       sync.RWMutex
+	userUpdateCache          = make(map[string]updateCache)
+	userUpsertCacheMut       sync.RWMutex
+	userUpsertCache          = make(map[string]insertCache)
 )
 
 var (
@@ -175,27 +175,27 @@ var (
 	_ = qmhelper.Where
 )
 
-var bookAfterSelectHooks []BookHook
+var userAfterSelectHooks []UserHook
 
-var bookBeforeInsertHooks []BookHook
-var bookAfterInsertHooks []BookHook
+var userBeforeInsertHooks []UserHook
+var userAfterInsertHooks []UserHook
 
-var bookBeforeUpdateHooks []BookHook
-var bookAfterUpdateHooks []BookHook
+var userBeforeUpdateHooks []UserHook
+var userAfterUpdateHooks []UserHook
 
-var bookBeforeDeleteHooks []BookHook
-var bookAfterDeleteHooks []BookHook
+var userBeforeDeleteHooks []UserHook
+var userAfterDeleteHooks []UserHook
 
-var bookBeforeUpsertHooks []BookHook
-var bookAfterUpsertHooks []BookHook
+var userBeforeUpsertHooks []UserHook
+var userAfterUpsertHooks []UserHook
 
 // doAfterSelectHooks executes all "after Select" hooks.
-func (o *Book) doAfterSelectHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
+func (o *User) doAfterSelectHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
 	if boil.HooksAreSkipped(ctx) {
 		return nil
 	}
 
-	for _, hook := range bookAfterSelectHooks {
+	for _, hook := range userAfterSelectHooks {
 		if err := hook(ctx, exec, o); err != nil {
 			return err
 		}
@@ -205,12 +205,12 @@ func (o *Book) doAfterSelectHooks(ctx context.Context, exec boil.ContextExecutor
 }
 
 // doBeforeInsertHooks executes all "before insert" hooks.
-func (o *Book) doBeforeInsertHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
+func (o *User) doBeforeInsertHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
 	if boil.HooksAreSkipped(ctx) {
 		return nil
 	}
 
-	for _, hook := range bookBeforeInsertHooks {
+	for _, hook := range userBeforeInsertHooks {
 		if err := hook(ctx, exec, o); err != nil {
 			return err
 		}
@@ -220,12 +220,12 @@ func (o *Book) doBeforeInsertHooks(ctx context.Context, exec boil.ContextExecuto
 }
 
 // doAfterInsertHooks executes all "after Insert" hooks.
-func (o *Book) doAfterInsertHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
+func (o *User) doAfterInsertHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
 	if boil.HooksAreSkipped(ctx) {
 		return nil
 	}
 
-	for _, hook := range bookAfterInsertHooks {
+	for _, hook := range userAfterInsertHooks {
 		if err := hook(ctx, exec, o); err != nil {
 			return err
 		}
@@ -235,12 +235,12 @@ func (o *Book) doAfterInsertHooks(ctx context.Context, exec boil.ContextExecutor
 }
 
 // doBeforeUpdateHooks executes all "before Update" hooks.
-func (o *Book) doBeforeUpdateHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
+func (o *User) doBeforeUpdateHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
 	if boil.HooksAreSkipped(ctx) {
 		return nil
 	}
 
-	for _, hook := range bookBeforeUpdateHooks {
+	for _, hook := range userBeforeUpdateHooks {
 		if err := hook(ctx, exec, o); err != nil {
 			return err
 		}
@@ -250,12 +250,12 @@ func (o *Book) doBeforeUpdateHooks(ctx context.Context, exec boil.ContextExecuto
 }
 
 // doAfterUpdateHooks executes all "after Update" hooks.
-func (o *Book) doAfterUpdateHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
+func (o *User) doAfterUpdateHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
 	if boil.HooksAreSkipped(ctx) {
 		return nil
 	}
 
-	for _, hook := range bookAfterUpdateHooks {
+	for _, hook := range userAfterUpdateHooks {
 		if err := hook(ctx, exec, o); err != nil {
 			return err
 		}
@@ -265,12 +265,12 @@ func (o *Book) doAfterUpdateHooks(ctx context.Context, exec boil.ContextExecutor
 }
 
 // doBeforeDeleteHooks executes all "before Delete" hooks.
-func (o *Book) doBeforeDeleteHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
+func (o *User) doBeforeDeleteHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
 	if boil.HooksAreSkipped(ctx) {
 		return nil
 	}
 
-	for _, hook := range bookBeforeDeleteHooks {
+	for _, hook := range userBeforeDeleteHooks {
 		if err := hook(ctx, exec, o); err != nil {
 			return err
 		}
@@ -280,12 +280,12 @@ func (o *Book) doBeforeDeleteHooks(ctx context.Context, exec boil.ContextExecuto
 }
 
 // doAfterDeleteHooks executes all "after Delete" hooks.
-func (o *Book) doAfterDeleteHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
+func (o *User) doAfterDeleteHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
 	if boil.HooksAreSkipped(ctx) {
 		return nil
 	}
 
-	for _, hook := range bookAfterDeleteHooks {
+	for _, hook := range userAfterDeleteHooks {
 		if err := hook(ctx, exec, o); err != nil {
 			return err
 		}
@@ -295,12 +295,12 @@ func (o *Book) doAfterDeleteHooks(ctx context.Context, exec boil.ContextExecutor
 }
 
 // doBeforeUpsertHooks executes all "before Upsert" hooks.
-func (o *Book) doBeforeUpsertHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
+func (o *User) doBeforeUpsertHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
 	if boil.HooksAreSkipped(ctx) {
 		return nil
 	}
 
-	for _, hook := range bookBeforeUpsertHooks {
+	for _, hook := range userBeforeUpsertHooks {
 		if err := hook(ctx, exec, o); err != nil {
 			return err
 		}
@@ -310,12 +310,12 @@ func (o *Book) doBeforeUpsertHooks(ctx context.Context, exec boil.ContextExecuto
 }
 
 // doAfterUpsertHooks executes all "after Upsert" hooks.
-func (o *Book) doAfterUpsertHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
+func (o *User) doAfterUpsertHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
 	if boil.HooksAreSkipped(ctx) {
 		return nil
 	}
 
-	for _, hook := range bookAfterUpsertHooks {
+	for _, hook := range userAfterUpsertHooks {
 		if err := hook(ctx, exec, o); err != nil {
 			return err
 		}
@@ -324,33 +324,33 @@ func (o *Book) doAfterUpsertHooks(ctx context.Context, exec boil.ContextExecutor
 	return nil
 }
 
-// AddBookHook registers your hook function for all future operations.
-func AddBookHook(hookPoint boil.HookPoint, bookHook BookHook) {
+// AddUserHook registers your hook function for all future operations.
+func AddUserHook(hookPoint boil.HookPoint, userHook UserHook) {
 	switch hookPoint {
 	case boil.AfterSelectHook:
-		bookAfterSelectHooks = append(bookAfterSelectHooks, bookHook)
+		userAfterSelectHooks = append(userAfterSelectHooks, userHook)
 	case boil.BeforeInsertHook:
-		bookBeforeInsertHooks = append(bookBeforeInsertHooks, bookHook)
+		userBeforeInsertHooks = append(userBeforeInsertHooks, userHook)
 	case boil.AfterInsertHook:
-		bookAfterInsertHooks = append(bookAfterInsertHooks, bookHook)
+		userAfterInsertHooks = append(userAfterInsertHooks, userHook)
 	case boil.BeforeUpdateHook:
-		bookBeforeUpdateHooks = append(bookBeforeUpdateHooks, bookHook)
+		userBeforeUpdateHooks = append(userBeforeUpdateHooks, userHook)
 	case boil.AfterUpdateHook:
-		bookAfterUpdateHooks = append(bookAfterUpdateHooks, bookHook)
+		userAfterUpdateHooks = append(userAfterUpdateHooks, userHook)
 	case boil.BeforeDeleteHook:
-		bookBeforeDeleteHooks = append(bookBeforeDeleteHooks, bookHook)
+		userBeforeDeleteHooks = append(userBeforeDeleteHooks, userHook)
 	case boil.AfterDeleteHook:
-		bookAfterDeleteHooks = append(bookAfterDeleteHooks, bookHook)
+		userAfterDeleteHooks = append(userAfterDeleteHooks, userHook)
 	case boil.BeforeUpsertHook:
-		bookBeforeUpsertHooks = append(bookBeforeUpsertHooks, bookHook)
+		userBeforeUpsertHooks = append(userBeforeUpsertHooks, userHook)
 	case boil.AfterUpsertHook:
-		bookAfterUpsertHooks = append(bookAfterUpsertHooks, bookHook)
+		userAfterUpsertHooks = append(userAfterUpsertHooks, userHook)
 	}
 }
 
-// One returns a single book record from the query.
-func (q bookQuery) One(ctx context.Context, exec boil.ContextExecutor) (*Book, error) {
-	o := &Book{}
+// One returns a single user record from the query.
+func (q userQuery) One(ctx context.Context, exec boil.ContextExecutor) (*User, error) {
+	o := &User{}
 
 	queries.SetLimit(q.Query, 1)
 
@@ -359,7 +359,7 @@ func (q bookQuery) One(ctx context.Context, exec boil.ContextExecutor) (*Book, e
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, sql.ErrNoRows
 		}
-		return nil, errors.Wrap(err, "models: failed to execute a one query for book")
+		return nil, errors.Wrap(err, "models: failed to execute a one query for user")
 	}
 
 	if err := o.doAfterSelectHooks(ctx, exec); err != nil {
@@ -369,16 +369,16 @@ func (q bookQuery) One(ctx context.Context, exec boil.ContextExecutor) (*Book, e
 	return o, nil
 }
 
-// All returns all Book records from the query.
-func (q bookQuery) All(ctx context.Context, exec boil.ContextExecutor) (BookSlice, error) {
-	var o []*Book
+// All returns all User records from the query.
+func (q userQuery) All(ctx context.Context, exec boil.ContextExecutor) (UserSlice, error) {
+	var o []*User
 
 	err := q.Bind(ctx, exec, &o)
 	if err != nil {
-		return nil, errors.Wrap(err, "models: failed to assign all query results to Book slice")
+		return nil, errors.Wrap(err, "models: failed to assign all query results to User slice")
 	}
 
-	if len(bookAfterSelectHooks) != 0 {
+	if len(userAfterSelectHooks) != 0 {
 		for _, obj := range o {
 			if err := obj.doAfterSelectHooks(ctx, exec); err != nil {
 				return o, err
@@ -389,8 +389,8 @@ func (q bookQuery) All(ctx context.Context, exec boil.ContextExecutor) (BookSlic
 	return o, nil
 }
 
-// Count returns the count of all Book records in the query.
-func (q bookQuery) Count(ctx context.Context, exec boil.ContextExecutor) (int64, error) {
+// Count returns the count of all User records in the query.
+func (q userQuery) Count(ctx context.Context, exec boil.ContextExecutor) (int64, error) {
 	var count int64
 
 	queries.SetSelect(q.Query, nil)
@@ -398,14 +398,14 @@ func (q bookQuery) Count(ctx context.Context, exec boil.ContextExecutor) (int64,
 
 	err := q.Query.QueryRowContext(ctx, exec).Scan(&count)
 	if err != nil {
-		return 0, errors.Wrap(err, "models: failed to count book rows")
+		return 0, errors.Wrap(err, "models: failed to count user rows")
 	}
 
 	return count, nil
 }
 
 // Exists checks if the row exists in the table.
-func (q bookQuery) Exists(ctx context.Context, exec boil.ContextExecutor) (bool, error) {
+func (q userQuery) Exists(ctx context.Context, exec boil.ContextExecutor) (bool, error) {
 	var count int64
 
 	queries.SetSelect(q.Query, nil)
@@ -414,58 +414,58 @@ func (q bookQuery) Exists(ctx context.Context, exec boil.ContextExecutor) (bool,
 
 	err := q.Query.QueryRowContext(ctx, exec).Scan(&count)
 	if err != nil {
-		return false, errors.Wrap(err, "models: failed to check if book exists")
+		return false, errors.Wrap(err, "models: failed to check if user exists")
 	}
 
 	return count > 0, nil
 }
 
-// Books retrieves all the records using an executor.
-func Books(mods ...qm.QueryMod) bookQuery {
-	mods = append(mods, qm.From("\"book\""))
+// Users retrieves all the records using an executor.
+func Users(mods ...qm.QueryMod) userQuery {
+	mods = append(mods, qm.From("\"user\""))
 	q := NewQuery(mods...)
 	if len(queries.GetSelect(q)) == 0 {
-		queries.SetSelect(q, []string{"\"book\".*"})
+		queries.SetSelect(q, []string{"\"user\".*"})
 	}
 
-	return bookQuery{q}
+	return userQuery{q}
 }
 
-// FindBook retrieves a single record by ID with an executor.
+// FindUser retrieves a single record by ID with an executor.
 // If selectCols is empty Find will return all columns.
-func FindBook(ctx context.Context, exec boil.ContextExecutor, iD int, selectCols ...string) (*Book, error) {
-	bookObj := &Book{}
+func FindUser(ctx context.Context, exec boil.ContextExecutor, iD int, selectCols ...string) (*User, error) {
+	userObj := &User{}
 
 	sel := "*"
 	if len(selectCols) > 0 {
 		sel = strings.Join(strmangle.IdentQuoteSlice(dialect.LQ, dialect.RQ, selectCols), ",")
 	}
 	query := fmt.Sprintf(
-		"select %s from \"book\" where \"id\"=$1", sel,
+		"select %s from \"user\" where \"id\"=$1", sel,
 	)
 
 	q := queries.Raw(query, iD)
 
-	err := q.Bind(ctx, exec, bookObj)
+	err := q.Bind(ctx, exec, userObj)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, sql.ErrNoRows
 		}
-		return nil, errors.Wrap(err, "models: unable to select from book")
+		return nil, errors.Wrap(err, "models: unable to select from user")
 	}
 
-	if err = bookObj.doAfterSelectHooks(ctx, exec); err != nil {
-		return bookObj, err
+	if err = userObj.doAfterSelectHooks(ctx, exec); err != nil {
+		return userObj, err
 	}
 
-	return bookObj, nil
+	return userObj, nil
 }
 
 // Insert a single record using an executor.
 // See boil.Columns.InsertColumnSet documentation to understand column list inference for inserts.
-func (o *Book) Insert(ctx context.Context, exec boil.ContextExecutor, columns boil.Columns) error {
+func (o *User) Insert(ctx context.Context, exec boil.ContextExecutor, columns boil.Columns) error {
 	if o == nil {
-		return errors.New("models: no book provided for insertion")
+		return errors.New("models: no user provided for insertion")
 	}
 
 	var err error
@@ -474,33 +474,33 @@ func (o *Book) Insert(ctx context.Context, exec boil.ContextExecutor, columns bo
 		return err
 	}
 
-	nzDefaults := queries.NonZeroDefaultSet(bookColumnsWithDefault, o)
+	nzDefaults := queries.NonZeroDefaultSet(userColumnsWithDefault, o)
 
 	key := makeCacheKey(columns, nzDefaults)
-	bookInsertCacheMut.RLock()
-	cache, cached := bookInsertCache[key]
-	bookInsertCacheMut.RUnlock()
+	userInsertCacheMut.RLock()
+	cache, cached := userInsertCache[key]
+	userInsertCacheMut.RUnlock()
 
 	if !cached {
 		wl, returnColumns := columns.InsertColumnSet(
-			bookAllColumns,
-			bookColumnsWithDefault,
-			bookColumnsWithoutDefault,
+			userAllColumns,
+			userColumnsWithDefault,
+			userColumnsWithoutDefault,
 			nzDefaults,
 		)
 
-		cache.valueMapping, err = queries.BindMapping(bookType, bookMapping, wl)
+		cache.valueMapping, err = queries.BindMapping(userType, userMapping, wl)
 		if err != nil {
 			return err
 		}
-		cache.retMapping, err = queries.BindMapping(bookType, bookMapping, returnColumns)
+		cache.retMapping, err = queries.BindMapping(userType, userMapping, returnColumns)
 		if err != nil {
 			return err
 		}
 		if len(wl) != 0 {
-			cache.query = fmt.Sprintf("INSERT INTO \"book\" (\"%s\") %%sVALUES (%s)%%s", strings.Join(wl, "\",\""), strmangle.Placeholders(dialect.UseIndexPlaceholders, len(wl), 1, 1))
+			cache.query = fmt.Sprintf("INSERT INTO \"user\" (\"%s\") %%sVALUES (%s)%%s", strings.Join(wl, "\",\""), strmangle.Placeholders(dialect.UseIndexPlaceholders, len(wl), 1, 1))
 		} else {
-			cache.query = "INSERT INTO \"book\" %sDEFAULT VALUES%s"
+			cache.query = "INSERT INTO \"user\" %sDEFAULT VALUES%s"
 		}
 
 		var queryOutput, queryReturning string
@@ -528,49 +528,49 @@ func (o *Book) Insert(ctx context.Context, exec boil.ContextExecutor, columns bo
 	}
 
 	if err != nil {
-		return errors.Wrap(err, "models: unable to insert into book")
+		return errors.Wrap(err, "models: unable to insert into user")
 	}
 
 	if !cached {
-		bookInsertCacheMut.Lock()
-		bookInsertCache[key] = cache
-		bookInsertCacheMut.Unlock()
+		userInsertCacheMut.Lock()
+		userInsertCache[key] = cache
+		userInsertCacheMut.Unlock()
 	}
 
 	return o.doAfterInsertHooks(ctx, exec)
 }
 
-// Update uses an executor to update the Book.
+// Update uses an executor to update the User.
 // See boil.Columns.UpdateColumnSet documentation to understand column list inference for updates.
 // Update does not automatically update the record in case of default values. Use .Reload() to refresh the records.
-func (o *Book) Update(ctx context.Context, exec boil.ContextExecutor, columns boil.Columns) (int64, error) {
+func (o *User) Update(ctx context.Context, exec boil.ContextExecutor, columns boil.Columns) (int64, error) {
 	var err error
 	if err = o.doBeforeUpdateHooks(ctx, exec); err != nil {
 		return 0, err
 	}
 	key := makeCacheKey(columns, nil)
-	bookUpdateCacheMut.RLock()
-	cache, cached := bookUpdateCache[key]
-	bookUpdateCacheMut.RUnlock()
+	userUpdateCacheMut.RLock()
+	cache, cached := userUpdateCache[key]
+	userUpdateCacheMut.RUnlock()
 
 	if !cached {
 		wl := columns.UpdateColumnSet(
-			bookAllColumns,
-			bookPrimaryKeyColumns,
+			userAllColumns,
+			userPrimaryKeyColumns,
 		)
 
 		if !columns.IsWhitelist() {
 			wl = strmangle.SetComplement(wl, []string{"created_at"})
 		}
 		if len(wl) == 0 {
-			return 0, errors.New("models: unable to update book, could not build whitelist")
+			return 0, errors.New("models: unable to update user, could not build whitelist")
 		}
 
-		cache.query = fmt.Sprintf("UPDATE \"book\" SET %s WHERE %s",
+		cache.query = fmt.Sprintf("UPDATE \"user\" SET %s WHERE %s",
 			strmangle.SetParamNames("\"", "\"", 1, wl),
-			strmangle.WhereClause("\"", "\"", len(wl)+1, bookPrimaryKeyColumns),
+			strmangle.WhereClause("\"", "\"", len(wl)+1, userPrimaryKeyColumns),
 		)
-		cache.valueMapping, err = queries.BindMapping(bookType, bookMapping, append(wl, bookPrimaryKeyColumns...))
+		cache.valueMapping, err = queries.BindMapping(userType, userMapping, append(wl, userPrimaryKeyColumns...))
 		if err != nil {
 			return 0, err
 		}
@@ -586,42 +586,42 @@ func (o *Book) Update(ctx context.Context, exec boil.ContextExecutor, columns bo
 	var result sql.Result
 	result, err = exec.ExecContext(ctx, cache.query, values...)
 	if err != nil {
-		return 0, errors.Wrap(err, "models: unable to update book row")
+		return 0, errors.Wrap(err, "models: unable to update user row")
 	}
 
 	rowsAff, err := result.RowsAffected()
 	if err != nil {
-		return 0, errors.Wrap(err, "models: failed to get rows affected by update for book")
+		return 0, errors.Wrap(err, "models: failed to get rows affected by update for user")
 	}
 
 	if !cached {
-		bookUpdateCacheMut.Lock()
-		bookUpdateCache[key] = cache
-		bookUpdateCacheMut.Unlock()
+		userUpdateCacheMut.Lock()
+		userUpdateCache[key] = cache
+		userUpdateCacheMut.Unlock()
 	}
 
 	return rowsAff, o.doAfterUpdateHooks(ctx, exec)
 }
 
 // UpdateAll updates all rows with the specified column values.
-func (q bookQuery) UpdateAll(ctx context.Context, exec boil.ContextExecutor, cols M) (int64, error) {
+func (q userQuery) UpdateAll(ctx context.Context, exec boil.ContextExecutor, cols M) (int64, error) {
 	queries.SetUpdate(q.Query, cols)
 
 	result, err := q.Query.ExecContext(ctx, exec)
 	if err != nil {
-		return 0, errors.Wrap(err, "models: unable to update all for book")
+		return 0, errors.Wrap(err, "models: unable to update all for user")
 	}
 
 	rowsAff, err := result.RowsAffected()
 	if err != nil {
-		return 0, errors.Wrap(err, "models: unable to retrieve rows affected for book")
+		return 0, errors.Wrap(err, "models: unable to retrieve rows affected for user")
 	}
 
 	return rowsAff, nil
 }
 
 // UpdateAll updates all rows with the specified column values, using an executor.
-func (o BookSlice) UpdateAll(ctx context.Context, exec boil.ContextExecutor, cols M) (int64, error) {
+func (o UserSlice) UpdateAll(ctx context.Context, exec boil.ContextExecutor, cols M) (int64, error) {
 	ln := int64(len(o))
 	if ln == 0 {
 		return 0, nil
@@ -643,13 +643,13 @@ func (o BookSlice) UpdateAll(ctx context.Context, exec boil.ContextExecutor, col
 
 	// Append all of the primary key values for each column
 	for _, obj := range o {
-		pkeyArgs := queries.ValuesFromMapping(reflect.Indirect(reflect.ValueOf(obj)), bookPrimaryKeyMapping)
+		pkeyArgs := queries.ValuesFromMapping(reflect.Indirect(reflect.ValueOf(obj)), userPrimaryKeyMapping)
 		args = append(args, pkeyArgs...)
 	}
 
-	sql := fmt.Sprintf("UPDATE \"book\" SET %s WHERE %s",
+	sql := fmt.Sprintf("UPDATE \"user\" SET %s WHERE %s",
 		strmangle.SetParamNames("\"", "\"", 1, colNames),
-		strmangle.WhereClauseRepeated(string(dialect.LQ), string(dialect.RQ), len(colNames)+1, bookPrimaryKeyColumns, len(o)))
+		strmangle.WhereClauseRepeated(string(dialect.LQ), string(dialect.RQ), len(colNames)+1, userPrimaryKeyColumns, len(o)))
 
 	if boil.IsDebug(ctx) {
 		writer := boil.DebugWriterFrom(ctx)
@@ -658,28 +658,28 @@ func (o BookSlice) UpdateAll(ctx context.Context, exec boil.ContextExecutor, col
 	}
 	result, err := exec.ExecContext(ctx, sql, args...)
 	if err != nil {
-		return 0, errors.Wrap(err, "models: unable to update all in book slice")
+		return 0, errors.Wrap(err, "models: unable to update all in user slice")
 	}
 
 	rowsAff, err := result.RowsAffected()
 	if err != nil {
-		return 0, errors.Wrap(err, "models: unable to retrieve rows affected all in update all book")
+		return 0, errors.Wrap(err, "models: unable to retrieve rows affected all in update all user")
 	}
 	return rowsAff, nil
 }
 
 // Upsert attempts an insert using an executor, and does an update or ignore on conflict.
 // See boil.Columns documentation for how to properly use updateColumns and insertColumns.
-func (o *Book) Upsert(ctx context.Context, exec boil.ContextExecutor, updateOnConflict bool, conflictColumns []string, updateColumns, insertColumns boil.Columns) error {
+func (o *User) Upsert(ctx context.Context, exec boil.ContextExecutor, updateOnConflict bool, conflictColumns []string, updateColumns, insertColumns boil.Columns) error {
 	if o == nil {
-		return errors.New("models: no book provided for upsert")
+		return errors.New("models: no user provided for upsert")
 	}
 
 	if err := o.doBeforeUpsertHooks(ctx, exec); err != nil {
 		return err
 	}
 
-	nzDefaults := queries.NonZeroDefaultSet(bookColumnsWithDefault, o)
+	nzDefaults := queries.NonZeroDefaultSet(userColumnsWithDefault, o)
 
 	// Build cache key in-line uglily - mysql vs psql problems
 	buf := strmangle.GetBuffer()
@@ -709,42 +709,42 @@ func (o *Book) Upsert(ctx context.Context, exec boil.ContextExecutor, updateOnCo
 	key := buf.String()
 	strmangle.PutBuffer(buf)
 
-	bookUpsertCacheMut.RLock()
-	cache, cached := bookUpsertCache[key]
-	bookUpsertCacheMut.RUnlock()
+	userUpsertCacheMut.RLock()
+	cache, cached := userUpsertCache[key]
+	userUpsertCacheMut.RUnlock()
 
 	var err error
 
 	if !cached {
 		insert, ret := insertColumns.InsertColumnSet(
-			bookAllColumns,
-			bookColumnsWithDefault,
-			bookColumnsWithoutDefault,
+			userAllColumns,
+			userColumnsWithDefault,
+			userColumnsWithoutDefault,
 			nzDefaults,
 		)
 
 		update := updateColumns.UpdateColumnSet(
-			bookAllColumns,
-			bookPrimaryKeyColumns,
+			userAllColumns,
+			userPrimaryKeyColumns,
 		)
 
 		if updateOnConflict && len(update) == 0 {
-			return errors.New("models: unable to upsert book, could not build update column list")
+			return errors.New("models: unable to upsert user, could not build update column list")
 		}
 
 		conflict := conflictColumns
 		if len(conflict) == 0 {
-			conflict = make([]string, len(bookPrimaryKeyColumns))
-			copy(conflict, bookPrimaryKeyColumns)
+			conflict = make([]string, len(userPrimaryKeyColumns))
+			copy(conflict, userPrimaryKeyColumns)
 		}
-		cache.query = buildUpsertQueryPostgres(dialect, "\"book\"", updateOnConflict, ret, update, conflict, insert)
+		cache.query = buildUpsertQueryPostgres(dialect, "\"user\"", updateOnConflict, ret, update, conflict, insert)
 
-		cache.valueMapping, err = queries.BindMapping(bookType, bookMapping, insert)
+		cache.valueMapping, err = queries.BindMapping(userType, userMapping, insert)
 		if err != nil {
 			return err
 		}
 		if len(ret) != 0 {
-			cache.retMapping, err = queries.BindMapping(bookType, bookMapping, ret)
+			cache.retMapping, err = queries.BindMapping(userType, userMapping, ret)
 			if err != nil {
 				return err
 			}
@@ -772,31 +772,31 @@ func (o *Book) Upsert(ctx context.Context, exec boil.ContextExecutor, updateOnCo
 		_, err = exec.ExecContext(ctx, cache.query, vals...)
 	}
 	if err != nil {
-		return errors.Wrap(err, "models: unable to upsert book")
+		return errors.Wrap(err, "models: unable to upsert user")
 	}
 
 	if !cached {
-		bookUpsertCacheMut.Lock()
-		bookUpsertCache[key] = cache
-		bookUpsertCacheMut.Unlock()
+		userUpsertCacheMut.Lock()
+		userUpsertCache[key] = cache
+		userUpsertCacheMut.Unlock()
 	}
 
 	return o.doAfterUpsertHooks(ctx, exec)
 }
 
-// Delete deletes a single Book record with an executor.
+// Delete deletes a single User record with an executor.
 // Delete will match against the primary key column to find the record to delete.
-func (o *Book) Delete(ctx context.Context, exec boil.ContextExecutor) (int64, error) {
+func (o *User) Delete(ctx context.Context, exec boil.ContextExecutor) (int64, error) {
 	if o == nil {
-		return 0, errors.New("models: no Book provided for delete")
+		return 0, errors.New("models: no User provided for delete")
 	}
 
 	if err := o.doBeforeDeleteHooks(ctx, exec); err != nil {
 		return 0, err
 	}
 
-	args := queries.ValuesFromMapping(reflect.Indirect(reflect.ValueOf(o)), bookPrimaryKeyMapping)
-	sql := "DELETE FROM \"book\" WHERE \"id\"=$1"
+	args := queries.ValuesFromMapping(reflect.Indirect(reflect.ValueOf(o)), userPrimaryKeyMapping)
+	sql := "DELETE FROM \"user\" WHERE \"id\"=$1"
 
 	if boil.IsDebug(ctx) {
 		writer := boil.DebugWriterFrom(ctx)
@@ -805,12 +805,12 @@ func (o *Book) Delete(ctx context.Context, exec boil.ContextExecutor) (int64, er
 	}
 	result, err := exec.ExecContext(ctx, sql, args...)
 	if err != nil {
-		return 0, errors.Wrap(err, "models: unable to delete from book")
+		return 0, errors.Wrap(err, "models: unable to delete from user")
 	}
 
 	rowsAff, err := result.RowsAffected()
 	if err != nil {
-		return 0, errors.Wrap(err, "models: failed to get rows affected by delete for book")
+		return 0, errors.Wrap(err, "models: failed to get rows affected by delete for user")
 	}
 
 	if err := o.doAfterDeleteHooks(ctx, exec); err != nil {
@@ -821,33 +821,33 @@ func (o *Book) Delete(ctx context.Context, exec boil.ContextExecutor) (int64, er
 }
 
 // DeleteAll deletes all matching rows.
-func (q bookQuery) DeleteAll(ctx context.Context, exec boil.ContextExecutor) (int64, error) {
+func (q userQuery) DeleteAll(ctx context.Context, exec boil.ContextExecutor) (int64, error) {
 	if q.Query == nil {
-		return 0, errors.New("models: no bookQuery provided for delete all")
+		return 0, errors.New("models: no userQuery provided for delete all")
 	}
 
 	queries.SetDelete(q.Query)
 
 	result, err := q.Query.ExecContext(ctx, exec)
 	if err != nil {
-		return 0, errors.Wrap(err, "models: unable to delete all from book")
+		return 0, errors.Wrap(err, "models: unable to delete all from user")
 	}
 
 	rowsAff, err := result.RowsAffected()
 	if err != nil {
-		return 0, errors.Wrap(err, "models: failed to get rows affected by deleteall for book")
+		return 0, errors.Wrap(err, "models: failed to get rows affected by deleteall for user")
 	}
 
 	return rowsAff, nil
 }
 
 // DeleteAll deletes all rows in the slice, using an executor.
-func (o BookSlice) DeleteAll(ctx context.Context, exec boil.ContextExecutor) (int64, error) {
+func (o UserSlice) DeleteAll(ctx context.Context, exec boil.ContextExecutor) (int64, error) {
 	if len(o) == 0 {
 		return 0, nil
 	}
 
-	if len(bookBeforeDeleteHooks) != 0 {
+	if len(userBeforeDeleteHooks) != 0 {
 		for _, obj := range o {
 			if err := obj.doBeforeDeleteHooks(ctx, exec); err != nil {
 				return 0, err
@@ -857,12 +857,12 @@ func (o BookSlice) DeleteAll(ctx context.Context, exec boil.ContextExecutor) (in
 
 	var args []interface{}
 	for _, obj := range o {
-		pkeyArgs := queries.ValuesFromMapping(reflect.Indirect(reflect.ValueOf(obj)), bookPrimaryKeyMapping)
+		pkeyArgs := queries.ValuesFromMapping(reflect.Indirect(reflect.ValueOf(obj)), userPrimaryKeyMapping)
 		args = append(args, pkeyArgs...)
 	}
 
-	sql := "DELETE FROM \"book\" WHERE " +
-		strmangle.WhereClauseRepeated(string(dialect.LQ), string(dialect.RQ), 1, bookPrimaryKeyColumns, len(o))
+	sql := "DELETE FROM \"user\" WHERE " +
+		strmangle.WhereClauseRepeated(string(dialect.LQ), string(dialect.RQ), 1, userPrimaryKeyColumns, len(o))
 
 	if boil.IsDebug(ctx) {
 		writer := boil.DebugWriterFrom(ctx)
@@ -871,15 +871,15 @@ func (o BookSlice) DeleteAll(ctx context.Context, exec boil.ContextExecutor) (in
 	}
 	result, err := exec.ExecContext(ctx, sql, args...)
 	if err != nil {
-		return 0, errors.Wrap(err, "models: unable to delete all from book slice")
+		return 0, errors.Wrap(err, "models: unable to delete all from user slice")
 	}
 
 	rowsAff, err := result.RowsAffected()
 	if err != nil {
-		return 0, errors.Wrap(err, "models: failed to get rows affected by deleteall for book")
+		return 0, errors.Wrap(err, "models: failed to get rows affected by deleteall for user")
 	}
 
-	if len(bookAfterDeleteHooks) != 0 {
+	if len(userAfterDeleteHooks) != 0 {
 		for _, obj := range o {
 			if err := obj.doAfterDeleteHooks(ctx, exec); err != nil {
 				return 0, err
@@ -892,8 +892,8 @@ func (o BookSlice) DeleteAll(ctx context.Context, exec boil.ContextExecutor) (in
 
 // Reload refetches the object from the database
 // using the primary keys with an executor.
-func (o *Book) Reload(ctx context.Context, exec boil.ContextExecutor) error {
-	ret, err := FindBook(ctx, exec, o.ID)
+func (o *User) Reload(ctx context.Context, exec boil.ContextExecutor) error {
+	ret, err := FindUser(ctx, exec, o.ID)
 	if err != nil {
 		return err
 	}
@@ -904,26 +904,26 @@ func (o *Book) Reload(ctx context.Context, exec boil.ContextExecutor) error {
 
 // ReloadAll refetches every row with matching primary key column values
 // and overwrites the original object slice with the newly updated slice.
-func (o *BookSlice) ReloadAll(ctx context.Context, exec boil.ContextExecutor) error {
+func (o *UserSlice) ReloadAll(ctx context.Context, exec boil.ContextExecutor) error {
 	if o == nil || len(*o) == 0 {
 		return nil
 	}
 
-	slice := BookSlice{}
+	slice := UserSlice{}
 	var args []interface{}
 	for _, obj := range *o {
-		pkeyArgs := queries.ValuesFromMapping(reflect.Indirect(reflect.ValueOf(obj)), bookPrimaryKeyMapping)
+		pkeyArgs := queries.ValuesFromMapping(reflect.Indirect(reflect.ValueOf(obj)), userPrimaryKeyMapping)
 		args = append(args, pkeyArgs...)
 	}
 
-	sql := "SELECT \"book\".* FROM \"book\" WHERE " +
-		strmangle.WhereClauseRepeated(string(dialect.LQ), string(dialect.RQ), 1, bookPrimaryKeyColumns, len(*o))
+	sql := "SELECT \"user\".* FROM \"user\" WHERE " +
+		strmangle.WhereClauseRepeated(string(dialect.LQ), string(dialect.RQ), 1, userPrimaryKeyColumns, len(*o))
 
 	q := queries.Raw(sql, args...)
 
 	err := q.Bind(ctx, exec, &slice)
 	if err != nil {
-		return errors.Wrap(err, "models: unable to reload all in BookSlice")
+		return errors.Wrap(err, "models: unable to reload all in UserSlice")
 	}
 
 	*o = slice
@@ -931,10 +931,10 @@ func (o *BookSlice) ReloadAll(ctx context.Context, exec boil.ContextExecutor) er
 	return nil
 }
 
-// BookExists checks if the Book row exists.
-func BookExists(ctx context.Context, exec boil.ContextExecutor, iD int) (bool, error) {
+// UserExists checks if the User row exists.
+func UserExists(ctx context.Context, exec boil.ContextExecutor, iD int) (bool, error) {
 	var exists bool
-	sql := "select exists(select 1 from \"book\" where \"id\"=$1 limit 1)"
+	sql := "select exists(select 1 from \"user\" where \"id\"=$1 limit 1)"
 
 	if boil.IsDebug(ctx) {
 		writer := boil.DebugWriterFrom(ctx)
@@ -945,13 +945,13 @@ func BookExists(ctx context.Context, exec boil.ContextExecutor, iD int) (bool, e
 
 	err := row.Scan(&exists)
 	if err != nil {
-		return false, errors.Wrap(err, "models: unable to check if book exists")
+		return false, errors.Wrap(err, "models: unable to check if user exists")
 	}
 
 	return exists, nil
 }
 
-// Exists checks if the Book row exists.
-func (o *Book) Exists(ctx context.Context, exec boil.ContextExecutor) (bool, error) {
-	return BookExists(ctx, exec, o.ID)
+// Exists checks if the User row exists.
+func (o *User) Exists(ctx context.Context, exec boil.ContextExecutor) (bool, error) {
+	return UserExists(ctx, exec, o.ID)
 }

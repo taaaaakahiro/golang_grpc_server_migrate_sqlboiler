@@ -6,3 +6,6 @@ db:
 
 test:
 	go test ./...
+
+sql:
+	sqlboiler psql -c boiler.toml -o ./pkg/domain/models --wipe

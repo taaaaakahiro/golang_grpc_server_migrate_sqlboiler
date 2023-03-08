@@ -21,24 +21,24 @@ var (
 	_ = queries.Equal
 )
 
-func testBooks(t *testing.T) {
+func testUsers(t *testing.T) {
 	t.Parallel()
 
-	query := Books()
+	query := Users()
 
 	if query.Query == nil {
 		t.Error("expected a query, got nothing")
 	}
 }
 
-func testBooksDelete(t *testing.T) {
+func testUsersDelete(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Book{}
-	if err = randomize.Struct(seed, o, bookDBTypes, true, bookColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Book struct: %s", err)
+	o := &User{}
+	if err = randomize.Struct(seed, o, userDBTypes, true, userColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize User struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -54,7 +54,7 @@ func testBooksDelete(t *testing.T) {
 		t.Error("should only have deleted one row, but affected:", rowsAff)
 	}
 
-	count, err := Books().Count(ctx, tx)
+	count, err := Users().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -64,14 +64,14 @@ func testBooksDelete(t *testing.T) {
 	}
 }
 
-func testBooksQueryDeleteAll(t *testing.T) {
+func testUsersQueryDeleteAll(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Book{}
-	if err = randomize.Struct(seed, o, bookDBTypes, true, bookColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Book struct: %s", err)
+	o := &User{}
+	if err = randomize.Struct(seed, o, userDBTypes, true, userColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize User struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -81,13 +81,13 @@ func testBooksQueryDeleteAll(t *testing.T) {
 		t.Error(err)
 	}
 
-	if rowsAff, err := Books().DeleteAll(ctx, tx); err != nil {
+	if rowsAff, err := Users().DeleteAll(ctx, tx); err != nil {
 		t.Error(err)
 	} else if rowsAff != 1 {
 		t.Error("should only have deleted one row, but affected:", rowsAff)
 	}
 
-	count, err := Books().Count(ctx, tx)
+	count, err := Users().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -97,14 +97,14 @@ func testBooksQueryDeleteAll(t *testing.T) {
 	}
 }
 
-func testBooksSliceDeleteAll(t *testing.T) {
+func testUsersSliceDeleteAll(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Book{}
-	if err = randomize.Struct(seed, o, bookDBTypes, true, bookColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Book struct: %s", err)
+	o := &User{}
+	if err = randomize.Struct(seed, o, userDBTypes, true, userColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize User struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -114,7 +114,7 @@ func testBooksSliceDeleteAll(t *testing.T) {
 		t.Error(err)
 	}
 
-	slice := BookSlice{o}
+	slice := UserSlice{o}
 
 	if rowsAff, err := slice.DeleteAll(ctx, tx); err != nil {
 		t.Error(err)
@@ -122,7 +122,7 @@ func testBooksSliceDeleteAll(t *testing.T) {
 		t.Error("should only have deleted one row, but affected:", rowsAff)
 	}
 
-	count, err := Books().Count(ctx, tx)
+	count, err := Users().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -132,14 +132,14 @@ func testBooksSliceDeleteAll(t *testing.T) {
 	}
 }
 
-func testBooksExists(t *testing.T) {
+func testUsersExists(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Book{}
-	if err = randomize.Struct(seed, o, bookDBTypes, true, bookColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Book struct: %s", err)
+	o := &User{}
+	if err = randomize.Struct(seed, o, userDBTypes, true, userColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize User struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -149,23 +149,23 @@ func testBooksExists(t *testing.T) {
 		t.Error(err)
 	}
 
-	e, err := BookExists(ctx, tx, o.ID)
+	e, err := UserExists(ctx, tx, o.ID)
 	if err != nil {
-		t.Errorf("Unable to check if Book exists: %s", err)
+		t.Errorf("Unable to check if User exists: %s", err)
 	}
 	if !e {
-		t.Errorf("Expected BookExists to return true, but got false.")
+		t.Errorf("Expected UserExists to return true, but got false.")
 	}
 }
 
-func testBooksFind(t *testing.T) {
+func testUsersFind(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Book{}
-	if err = randomize.Struct(seed, o, bookDBTypes, true, bookColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Book struct: %s", err)
+	o := &User{}
+	if err = randomize.Struct(seed, o, userDBTypes, true, userColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize User struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -175,24 +175,24 @@ func testBooksFind(t *testing.T) {
 		t.Error(err)
 	}
 
-	bookFound, err := FindBook(ctx, tx, o.ID)
+	userFound, err := FindUser(ctx, tx, o.ID)
 	if err != nil {
 		t.Error(err)
 	}
 
-	if bookFound == nil {
+	if userFound == nil {
 		t.Error("want a record, got nil")
 	}
 }
 
-func testBooksBind(t *testing.T) {
+func testUsersBind(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Book{}
-	if err = randomize.Struct(seed, o, bookDBTypes, true, bookColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Book struct: %s", err)
+	o := &User{}
+	if err = randomize.Struct(seed, o, userDBTypes, true, userColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize User struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -202,19 +202,19 @@ func testBooksBind(t *testing.T) {
 		t.Error(err)
 	}
 
-	if err = Books().Bind(ctx, tx, o); err != nil {
+	if err = Users().Bind(ctx, tx, o); err != nil {
 		t.Error(err)
 	}
 }
 
-func testBooksOne(t *testing.T) {
+func testUsersOne(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Book{}
-	if err = randomize.Struct(seed, o, bookDBTypes, true, bookColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Book struct: %s", err)
+	o := &User{}
+	if err = randomize.Struct(seed, o, userDBTypes, true, userColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize User struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -224,38 +224,38 @@ func testBooksOne(t *testing.T) {
 		t.Error(err)
 	}
 
-	if x, err := Books().One(ctx, tx); err != nil {
+	if x, err := Users().One(ctx, tx); err != nil {
 		t.Error(err)
 	} else if x == nil {
 		t.Error("expected to get a non nil record")
 	}
 }
 
-func testBooksAll(t *testing.T) {
+func testUsersAll(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	bookOne := &Book{}
-	bookTwo := &Book{}
-	if err = randomize.Struct(seed, bookOne, bookDBTypes, false, bookColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Book struct: %s", err)
+	userOne := &User{}
+	userTwo := &User{}
+	if err = randomize.Struct(seed, userOne, userDBTypes, false, userColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize User struct: %s", err)
 	}
-	if err = randomize.Struct(seed, bookTwo, bookDBTypes, false, bookColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Book struct: %s", err)
+	if err = randomize.Struct(seed, userTwo, userDBTypes, false, userColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize User struct: %s", err)
 	}
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
-	if err = bookOne.Insert(ctx, tx, boil.Infer()); err != nil {
+	if err = userOne.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Error(err)
 	}
-	if err = bookTwo.Insert(ctx, tx, boil.Infer()); err != nil {
+	if err = userTwo.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Error(err)
 	}
 
-	slice, err := Books().All(ctx, tx)
+	slice, err := Users().All(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -265,31 +265,31 @@ func testBooksAll(t *testing.T) {
 	}
 }
 
-func testBooksCount(t *testing.T) {
+func testUsersCount(t *testing.T) {
 	t.Parallel()
 
 	var err error
 	seed := randomize.NewSeed()
-	bookOne := &Book{}
-	bookTwo := &Book{}
-	if err = randomize.Struct(seed, bookOne, bookDBTypes, false, bookColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Book struct: %s", err)
+	userOne := &User{}
+	userTwo := &User{}
+	if err = randomize.Struct(seed, userOne, userDBTypes, false, userColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize User struct: %s", err)
 	}
-	if err = randomize.Struct(seed, bookTwo, bookDBTypes, false, bookColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Book struct: %s", err)
+	if err = randomize.Struct(seed, userTwo, userDBTypes, false, userColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize User struct: %s", err)
 	}
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
-	if err = bookOne.Insert(ctx, tx, boil.Infer()); err != nil {
+	if err = userOne.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Error(err)
 	}
-	if err = bookTwo.Insert(ctx, tx, boil.Infer()); err != nil {
+	if err = userTwo.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Error(err)
 	}
 
-	count, err := Books().Count(ctx, tx)
+	count, err := Users().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -299,155 +299,155 @@ func testBooksCount(t *testing.T) {
 	}
 }
 
-func bookBeforeInsertHook(ctx context.Context, e boil.ContextExecutor, o *Book) error {
-	*o = Book{}
+func userBeforeInsertHook(ctx context.Context, e boil.ContextExecutor, o *User) error {
+	*o = User{}
 	return nil
 }
 
-func bookAfterInsertHook(ctx context.Context, e boil.ContextExecutor, o *Book) error {
-	*o = Book{}
+func userAfterInsertHook(ctx context.Context, e boil.ContextExecutor, o *User) error {
+	*o = User{}
 	return nil
 }
 
-func bookAfterSelectHook(ctx context.Context, e boil.ContextExecutor, o *Book) error {
-	*o = Book{}
+func userAfterSelectHook(ctx context.Context, e boil.ContextExecutor, o *User) error {
+	*o = User{}
 	return nil
 }
 
-func bookBeforeUpdateHook(ctx context.Context, e boil.ContextExecutor, o *Book) error {
-	*o = Book{}
+func userBeforeUpdateHook(ctx context.Context, e boil.ContextExecutor, o *User) error {
+	*o = User{}
 	return nil
 }
 
-func bookAfterUpdateHook(ctx context.Context, e boil.ContextExecutor, o *Book) error {
-	*o = Book{}
+func userAfterUpdateHook(ctx context.Context, e boil.ContextExecutor, o *User) error {
+	*o = User{}
 	return nil
 }
 
-func bookBeforeDeleteHook(ctx context.Context, e boil.ContextExecutor, o *Book) error {
-	*o = Book{}
+func userBeforeDeleteHook(ctx context.Context, e boil.ContextExecutor, o *User) error {
+	*o = User{}
 	return nil
 }
 
-func bookAfterDeleteHook(ctx context.Context, e boil.ContextExecutor, o *Book) error {
-	*o = Book{}
+func userAfterDeleteHook(ctx context.Context, e boil.ContextExecutor, o *User) error {
+	*o = User{}
 	return nil
 }
 
-func bookBeforeUpsertHook(ctx context.Context, e boil.ContextExecutor, o *Book) error {
-	*o = Book{}
+func userBeforeUpsertHook(ctx context.Context, e boil.ContextExecutor, o *User) error {
+	*o = User{}
 	return nil
 }
 
-func bookAfterUpsertHook(ctx context.Context, e boil.ContextExecutor, o *Book) error {
-	*o = Book{}
+func userAfterUpsertHook(ctx context.Context, e boil.ContextExecutor, o *User) error {
+	*o = User{}
 	return nil
 }
 
-func testBooksHooks(t *testing.T) {
+func testUsersHooks(t *testing.T) {
 	t.Parallel()
 
 	var err error
 
 	ctx := context.Background()
-	empty := &Book{}
-	o := &Book{}
+	empty := &User{}
+	o := &User{}
 
 	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, o, bookDBTypes, false); err != nil {
-		t.Errorf("Unable to randomize Book object: %s", err)
+	if err = randomize.Struct(seed, o, userDBTypes, false); err != nil {
+		t.Errorf("Unable to randomize User object: %s", err)
 	}
 
-	AddBookHook(boil.BeforeInsertHook, bookBeforeInsertHook)
+	AddUserHook(boil.BeforeInsertHook, userBeforeInsertHook)
 	if err = o.doBeforeInsertHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doBeforeInsertHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected BeforeInsertHook function to empty object, but got: %#v", o)
 	}
-	bookBeforeInsertHooks = []BookHook{}
+	userBeforeInsertHooks = []UserHook{}
 
-	AddBookHook(boil.AfterInsertHook, bookAfterInsertHook)
+	AddUserHook(boil.AfterInsertHook, userAfterInsertHook)
 	if err = o.doAfterInsertHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterInsertHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterInsertHook function to empty object, but got: %#v", o)
 	}
-	bookAfterInsertHooks = []BookHook{}
+	userAfterInsertHooks = []UserHook{}
 
-	AddBookHook(boil.AfterSelectHook, bookAfterSelectHook)
+	AddUserHook(boil.AfterSelectHook, userAfterSelectHook)
 	if err = o.doAfterSelectHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterSelectHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterSelectHook function to empty object, but got: %#v", o)
 	}
-	bookAfterSelectHooks = []BookHook{}
+	userAfterSelectHooks = []UserHook{}
 
-	AddBookHook(boil.BeforeUpdateHook, bookBeforeUpdateHook)
+	AddUserHook(boil.BeforeUpdateHook, userBeforeUpdateHook)
 	if err = o.doBeforeUpdateHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doBeforeUpdateHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected BeforeUpdateHook function to empty object, but got: %#v", o)
 	}
-	bookBeforeUpdateHooks = []BookHook{}
+	userBeforeUpdateHooks = []UserHook{}
 
-	AddBookHook(boil.AfterUpdateHook, bookAfterUpdateHook)
+	AddUserHook(boil.AfterUpdateHook, userAfterUpdateHook)
 	if err = o.doAfterUpdateHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterUpdateHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterUpdateHook function to empty object, but got: %#v", o)
 	}
-	bookAfterUpdateHooks = []BookHook{}
+	userAfterUpdateHooks = []UserHook{}
 
-	AddBookHook(boil.BeforeDeleteHook, bookBeforeDeleteHook)
+	AddUserHook(boil.BeforeDeleteHook, userBeforeDeleteHook)
 	if err = o.doBeforeDeleteHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doBeforeDeleteHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected BeforeDeleteHook function to empty object, but got: %#v", o)
 	}
-	bookBeforeDeleteHooks = []BookHook{}
+	userBeforeDeleteHooks = []UserHook{}
 
-	AddBookHook(boil.AfterDeleteHook, bookAfterDeleteHook)
+	AddUserHook(boil.AfterDeleteHook, userAfterDeleteHook)
 	if err = o.doAfterDeleteHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterDeleteHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterDeleteHook function to empty object, but got: %#v", o)
 	}
-	bookAfterDeleteHooks = []BookHook{}
+	userAfterDeleteHooks = []UserHook{}
 
-	AddBookHook(boil.BeforeUpsertHook, bookBeforeUpsertHook)
+	AddUserHook(boil.BeforeUpsertHook, userBeforeUpsertHook)
 	if err = o.doBeforeUpsertHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doBeforeUpsertHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected BeforeUpsertHook function to empty object, but got: %#v", o)
 	}
-	bookBeforeUpsertHooks = []BookHook{}
+	userBeforeUpsertHooks = []UserHook{}
 
-	AddBookHook(boil.AfterUpsertHook, bookAfterUpsertHook)
+	AddUserHook(boil.AfterUpsertHook, userAfterUpsertHook)
 	if err = o.doAfterUpsertHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterUpsertHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterUpsertHook function to empty object, but got: %#v", o)
 	}
-	bookAfterUpsertHooks = []BookHook{}
+	userAfterUpsertHooks = []UserHook{}
 }
 
-func testBooksInsert(t *testing.T) {
+func testUsersInsert(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Book{}
-	if err = randomize.Struct(seed, o, bookDBTypes, true, bookColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Book struct: %s", err)
+	o := &User{}
+	if err = randomize.Struct(seed, o, userDBTypes, true, userColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize User struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -457,7 +457,7 @@ func testBooksInsert(t *testing.T) {
 		t.Error(err)
 	}
 
-	count, err := Books().Count(ctx, tx)
+	count, err := Users().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -467,24 +467,24 @@ func testBooksInsert(t *testing.T) {
 	}
 }
 
-func testBooksInsertWhitelist(t *testing.T) {
+func testUsersInsertWhitelist(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Book{}
-	if err = randomize.Struct(seed, o, bookDBTypes, true); err != nil {
-		t.Errorf("Unable to randomize Book struct: %s", err)
+	o := &User{}
+	if err = randomize.Struct(seed, o, userDBTypes, true); err != nil {
+		t.Errorf("Unable to randomize User struct: %s", err)
 	}
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
-	if err = o.Insert(ctx, tx, boil.Whitelist(bookColumnsWithoutDefault...)); err != nil {
+	if err = o.Insert(ctx, tx, boil.Whitelist(userColumnsWithoutDefault...)); err != nil {
 		t.Error(err)
 	}
 
-	count, err := Books().Count(ctx, tx)
+	count, err := Users().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -494,14 +494,14 @@ func testBooksInsertWhitelist(t *testing.T) {
 	}
 }
 
-func testBooksReload(t *testing.T) {
+func testUsersReload(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Book{}
-	if err = randomize.Struct(seed, o, bookDBTypes, true, bookColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Book struct: %s", err)
+	o := &User{}
+	if err = randomize.Struct(seed, o, userDBTypes, true, userColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize User struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -516,14 +516,14 @@ func testBooksReload(t *testing.T) {
 	}
 }
 
-func testBooksReloadAll(t *testing.T) {
+func testUsersReloadAll(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Book{}
-	if err = randomize.Struct(seed, o, bookDBTypes, true, bookColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Book struct: %s", err)
+	o := &User{}
+	if err = randomize.Struct(seed, o, userDBTypes, true, userColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize User struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -533,21 +533,21 @@ func testBooksReloadAll(t *testing.T) {
 		t.Error(err)
 	}
 
-	slice := BookSlice{o}
+	slice := UserSlice{o}
 
 	if err = slice.ReloadAll(ctx, tx); err != nil {
 		t.Error(err)
 	}
 }
 
-func testBooksSelect(t *testing.T) {
+func testUsersSelect(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Book{}
-	if err = randomize.Struct(seed, o, bookDBTypes, true, bookColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Book struct: %s", err)
+	o := &User{}
+	if err = randomize.Struct(seed, o, userDBTypes, true, userColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize User struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -557,7 +557,7 @@ func testBooksSelect(t *testing.T) {
 		t.Error(err)
 	}
 
-	slice, err := Books().All(ctx, tx)
+	slice, err := Users().All(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -568,25 +568,25 @@ func testBooksSelect(t *testing.T) {
 }
 
 var (
-	bookDBTypes = map[string]string{`ID`: `integer`, `Name`: `character varying`}
+	userDBTypes = map[string]string{`ID`: `integer`, `Name`: `character varying`}
 	_           = bytes.MinRead
 )
 
-func testBooksUpdate(t *testing.T) {
+func testUsersUpdate(t *testing.T) {
 	t.Parallel()
 
-	if 0 == len(bookPrimaryKeyColumns) {
+	if 0 == len(userPrimaryKeyColumns) {
 		t.Skip("Skipping table with no primary key columns")
 	}
-	if len(bookAllColumns) == len(bookPrimaryKeyColumns) {
+	if len(userAllColumns) == len(userPrimaryKeyColumns) {
 		t.Skip("Skipping table with only primary key columns")
 	}
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Book{}
-	if err = randomize.Struct(seed, o, bookDBTypes, true, bookColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Book struct: %s", err)
+	o := &User{}
+	if err = randomize.Struct(seed, o, userDBTypes, true, userColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize User struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -596,7 +596,7 @@ func testBooksUpdate(t *testing.T) {
 		t.Error(err)
 	}
 
-	count, err := Books().Count(ctx, tx)
+	count, err := Users().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -605,8 +605,8 @@ func testBooksUpdate(t *testing.T) {
 		t.Error("want one record, got:", count)
 	}
 
-	if err = randomize.Struct(seed, o, bookDBTypes, true, bookPrimaryKeyColumns...); err != nil {
-		t.Errorf("Unable to randomize Book struct: %s", err)
+	if err = randomize.Struct(seed, o, userDBTypes, true, userPrimaryKeyColumns...); err != nil {
+		t.Errorf("Unable to randomize User struct: %s", err)
 	}
 
 	if rowsAff, err := o.Update(ctx, tx, boil.Infer()); err != nil {
@@ -616,18 +616,18 @@ func testBooksUpdate(t *testing.T) {
 	}
 }
 
-func testBooksSliceUpdateAll(t *testing.T) {
+func testUsersSliceUpdateAll(t *testing.T) {
 	t.Parallel()
 
-	if len(bookAllColumns) == len(bookPrimaryKeyColumns) {
+	if len(userAllColumns) == len(userPrimaryKeyColumns) {
 		t.Skip("Skipping table with only primary key columns")
 	}
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Book{}
-	if err = randomize.Struct(seed, o, bookDBTypes, true, bookColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Book struct: %s", err)
+	o := &User{}
+	if err = randomize.Struct(seed, o, userDBTypes, true, userColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize User struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -637,7 +637,7 @@ func testBooksSliceUpdateAll(t *testing.T) {
 		t.Error(err)
 	}
 
-	count, err := Books().Count(ctx, tx)
+	count, err := Users().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -646,18 +646,18 @@ func testBooksSliceUpdateAll(t *testing.T) {
 		t.Error("want one record, got:", count)
 	}
 
-	if err = randomize.Struct(seed, o, bookDBTypes, true, bookPrimaryKeyColumns...); err != nil {
-		t.Errorf("Unable to randomize Book struct: %s", err)
+	if err = randomize.Struct(seed, o, userDBTypes, true, userPrimaryKeyColumns...); err != nil {
+		t.Errorf("Unable to randomize User struct: %s", err)
 	}
 
 	// Remove Primary keys and unique columns from what we plan to update
 	var fields []string
-	if strmangle.StringSliceMatch(bookAllColumns, bookPrimaryKeyColumns) {
-		fields = bookAllColumns
+	if strmangle.StringSliceMatch(userAllColumns, userPrimaryKeyColumns) {
+		fields = userAllColumns
 	} else {
 		fields = strmangle.SetComplement(
-			bookAllColumns,
-			bookPrimaryKeyColumns,
+			userAllColumns,
+			userPrimaryKeyColumns,
 		)
 	}
 
@@ -675,7 +675,7 @@ func testBooksSliceUpdateAll(t *testing.T) {
 		}
 	}
 
-	slice := BookSlice{o}
+	slice := UserSlice{o}
 	if rowsAff, err := slice.UpdateAll(ctx, tx, updateMap); err != nil {
 		t.Error(err)
 	} else if rowsAff != 1 {
@@ -683,29 +683,29 @@ func testBooksSliceUpdateAll(t *testing.T) {
 	}
 }
 
-func testBooksUpsert(t *testing.T) {
+func testUsersUpsert(t *testing.T) {
 	t.Parallel()
 
-	if len(bookAllColumns) == len(bookPrimaryKeyColumns) {
+	if len(userAllColumns) == len(userPrimaryKeyColumns) {
 		t.Skip("Skipping table with only primary key columns")
 	}
 
 	seed := randomize.NewSeed()
 	var err error
 	// Attempt the INSERT side of an UPSERT
-	o := Book{}
-	if err = randomize.Struct(seed, &o, bookDBTypes, true); err != nil {
-		t.Errorf("Unable to randomize Book struct: %s", err)
+	o := User{}
+	if err = randomize.Struct(seed, &o, userDBTypes, true); err != nil {
+		t.Errorf("Unable to randomize User struct: %s", err)
 	}
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 	if err = o.Upsert(ctx, tx, false, nil, boil.Infer(), boil.Infer()); err != nil {
-		t.Errorf("Unable to upsert Book: %s", err)
+		t.Errorf("Unable to upsert User: %s", err)
 	}
 
-	count, err := Books().Count(ctx, tx)
+	count, err := Users().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -714,15 +714,15 @@ func testBooksUpsert(t *testing.T) {
 	}
 
 	// Attempt the UPDATE side of an UPSERT
-	if err = randomize.Struct(seed, &o, bookDBTypes, false, bookPrimaryKeyColumns...); err != nil {
-		t.Errorf("Unable to randomize Book struct: %s", err)
+	if err = randomize.Struct(seed, &o, userDBTypes, false, userPrimaryKeyColumns...); err != nil {
+		t.Errorf("Unable to randomize User struct: %s", err)
 	}
 
 	if err = o.Upsert(ctx, tx, true, nil, boil.Infer(), boil.Infer()); err != nil {
-		t.Errorf("Unable to upsert Book: %s", err)
+		t.Errorf("Unable to upsert User: %s", err)
 	}
 
-	count, err = Books().Count(ctx, tx)
+	count, err = Users().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
