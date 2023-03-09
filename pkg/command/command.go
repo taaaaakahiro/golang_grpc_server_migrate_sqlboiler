@@ -4,14 +4,12 @@ import (
 	"context"
 	"fmt"
 	"golang.org/x/exp/slog"
+	"google.golang.org/grpc/reflection"
 	"grpc_func_from_prcivate_repo/pkg/config"
-	"grpc_func_from_prcivate_repo/pkg/server"
-	"net/http"
+	"grpc_func_from_prcivate_repo/pkg/service"
+	"net"
 	"os"
 	"os/signal"
-	"time"
-
-	pb "github.com/taaaaakahiro/golang_grpc_proto/pb/proto"
 )
 
 const (
@@ -33,33 +31,30 @@ func run(ctx context.Context) int {
 		return exitNG
 	}
 
-	// init grpc
-	_ = pb.NewUserServiceClient(nil) //todo
+	// init lisner
+	listener, err := net.Listen("tcp", fmt.Sprintf(":%d", cfg.Server.Port))
+	if err != nil {
+		logger.Error("failed to listen port", err)
+		return exitNG
+	}
 
 	// init server
-	s := server.NewServer()
+	s := service.NewService(logger)
 
+	// reflectionを設定(grpcurlコマンドを受け付ける設定)
+	reflection.Register(s.GrpcServ)
+
+	// run grpc server
 	go func() {
-		if err = s.Echo.Start(fmt.Sprintf(":%d", cfg.Server.Port)); err != nil && err != http.ErrServerClosed {
-			s.Echo.Logger.Fatal("shutting down the server")
-		}
+		logger.InfoCtx(ctx, "starting gRPC server...", "PORT", cfg.Server.Port)
+		s.GrpcServ.Serve(listener)
 	}()
 
-	// シグナルを待機してGraceful Shutdownを実行
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt)
 	<-quit
+	logger.Info("stopping gRPC server...")
+	s.GrpcServ.GracefulStop()
 
-	s.Echo.Logger.Info("shutdown server...")
-
-	// コンテキストのタイムアウトを設定してサーバーをシャットダウン
-	ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
-	defer cancel()
-
-	if err = s.Echo.Shutdown(ctx); err != nil {
-		s.Echo.Logger.Fatal(err)
-	}
-
-	s.Echo.Logger.Info("server exiting")
 	return exitOk
 }

@@ -14,7 +14,13 @@ $ go env -w GOPRIVATE="github.com/<アカウント名>/*"
 
 ```
 
-# .gitconfig
+## grpc command
+```sh
+$ grpcurl -plaintext localhost:8080 list # list registered service
+    
+```
+
+## .gitconfig
 ```sh
 ## ssh
 [url "git@github.com:"]
@@ -23,3 +29,6 @@ $ go env -w GOPRIVATE="github.com/<アカウント名>/*"
 [url "https://ghp_XXXX:x-oauth-basic@github.com"]
     insteadOf = https://github.com
 ```
+
+## Article
+ - https://zenn.dev/hsaki/books/golang-grpc-starting/viewer/server
