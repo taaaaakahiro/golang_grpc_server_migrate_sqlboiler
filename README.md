@@ -16,7 +16,7 @@ $ go env -w GOPRIVATE="github.com/<アカウント名>/*"
 
 ## grpc command
 ```sh
-$ grpcurl -plaintext localhost:8080 list # list registered service
+$ grpcurl -plaintext localhost:<PORT> list # list registered service
     
 ```
 
@@ -31,4 +31,7 @@ $ grpcurl -plaintext localhost:8080 list # list registered service
 ```
 
 ## Article
- - https://zenn.dev/hsaki/books/golang-grpc-starting/viewer/server
+ - grpc
+   - https://zenn.dev/hsaki/books/golang-grpc-starting/viewer/server
+ - slog
+   - https://gihyo.jp/article/2023/02/tukinami-go-04
