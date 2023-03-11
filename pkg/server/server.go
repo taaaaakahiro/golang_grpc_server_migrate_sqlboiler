@@ -1,28 +1,25 @@
 package server
 
 import (
-	"github.com/labstack/echo/v4"
-	"net/http"
+	pb "github.com/taaaaakahiro/golang_grpc_proto/pb/proto"
+	"google.golang.org/grpc"
+	"grpc_func_from_prcivate_repo/pkg/service"
 )
 
 type Server struct {
-	Echo *echo.Echo
+	GrpcServ *grpc.Server
 }
 
-func NewServer() *Server {
-	s := &Server{}
-	s.registerHandler()
+func NewServer(services *service.Service) *Server {
+	s := &Server{
+		GrpcServ: grpc.NewServer(),
+	}
+	s.registerService(services)
 
 	return s
 }
 
-func (s *Server) registerHandler() {
-	s.Echo = echo.New()
-	s.Echo.GET("/healthz", healthzHandler(s.Echo.AcquireContext()))
-}
+func (s *Server) registerService(services *service.Service) {
+	pb.RegisterUserServiceServer(s.GrpcServ, services.UserService)
 
-func healthzHandler(c echo.Context) echo.HandlerFunc {
-	return func(c echo.Context) error {
-		return c.String(http.StatusOK, "OK")
-	}
 }

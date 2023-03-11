@@ -2,17 +2,16 @@ package service
 
 import (
 	"golang.org/x/exp/slog"
-	"google.golang.org/grpc"
+	"grpc_func_from_prcivate_repo/pkg/usecase"
 )
 
 type Service struct {
-	GrpcServ *grpc.Server
+	logger      *slog.Logger
+	UserService *UserService
 }
 
-func NewService(logger *slog.Logger) *Service {
-	s := grpc.NewServer()
-
+func NewService(logger *slog.Logger, uc *usecase.UseCase) *Service {
 	return &Service{
-		GrpcServ: s,
+		UserService: NewUserService(logger, uc),
 	}
 }

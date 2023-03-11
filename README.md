@@ -12,11 +12,15 @@ $ git config --global url."git@github.com:".insteadOf "https://github.com/"
 # 環境設定 go get2回目以降
 $ go env -w GOPRIVATE="github.com/<アカウント名>/*"
 
+# funcをget
+$ go get github.com/taaaaakahiro/golang_grpc_proto
+
 ```
 
 ## grpc command
 ```sh
 $ grpcurl -plaintext localhost:<PORT> list # list registered service
+$ grpcurl -plaintext localhost:8080 list UserService # list registered method
     
 ```
 
