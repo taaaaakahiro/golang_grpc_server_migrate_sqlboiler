@@ -20,9 +20,10 @@ func NewUserService(logger *slog.Logger, uc *usecase.UseCase) *UserService {
 	}
 }
 
-func (s *UserService) CreateUser(ctx context.Context, req *pb.RegisterUserRequest) (*pb.RegisterUserResponse, error) {
-	return &pb.RegisterUserResponse{
-		Id: "create success!!!",
+func (s *UserService) Get(ctx context.Context, req *pb.GetRequest) (*pb.GetResponse, error) {
+	return &pb.GetResponse{
+		Id:   req.GetId(),
+		Name: "get success",
 	}, nil
 
 }

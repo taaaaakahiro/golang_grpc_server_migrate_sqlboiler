@@ -432,10 +432,10 @@ github.com/stretchr/testify v1.8.1/go.mod h1:w2LPCIKwWwSfY2zedu0+kehJoqGctiVI29o
 github.com/subosito/gotenv v1.3.0/go.mod h1:YzJjq/33h7nrwdY+iHMhEOEEbW0ovIz0tB6t6PwAXzs=
 github.com/subosito/gotenv v1.4.1 h1:jyEFiXpy21Wm81FBN71l9VoMMV8H8jG+qIK3GCpY6Qs=
 github.com/subosito/gotenv v1.4.1/go.mod h1:ayKnFf/c6rvx/2iiLrJUk1e6plDbT3edrFNGqEflhK0=
-github.com/taaaaakahiro/golang_grpc_proto v0.0.0-20230304092836-d4562b117e72 h1:KcXdfB+YZMREFAR+y3NwNR/CFCizHbbZBz2Yg6KkMmU=
-github.com/taaaaakahiro/golang_grpc_proto v0.0.0-20230304092836-d4562b117e72/go.mod h1:uq+JX/EeeJMQVTkiJ/RcAkjmGYmBqZnNYyXA/wU1yJI=
 github.com/taaaaakahiro/golang_grpc_proto v0.0.0-20230313111214-d5e78bc5e7b2 h1:Qede7kSn+3uM8OwI95hh85Q8ng09kdhsJVuoQgGjHFA=
 github.com/taaaaakahiro/golang_grpc_proto v0.0.0-20230313111214-d5e78bc5e7b2/go.mod h1:uq+JX/EeeJMQVTkiJ/RcAkjmGYmBqZnNYyXA/wU1yJI=
+github.com/taaaaakahiro/golang_grpc_proto v0.0.0-20230313155200-ba5c75b18a85 h1:ml+uNwkIaFkRyXgV0XBPFLOnZSblpdDY+vrUw7DI2ck=
+github.com/taaaaakahiro/golang_grpc_proto v0.0.0-20230313155200-ba5c75b18a85/go.mod h1:uq+JX/EeeJMQVTkiJ/RcAkjmGYmBqZnNYyXA/wU1yJI=
 github.com/tv42/httpunix v0.0.0-20150427012821-b75d8614f926/go.mod h1:9ESjWnEqriFuLhtthL60Sar/7RFoluCcXsuvEwTV5KM=
 github.com/volatiletech/inflect v0.0.1 h1:2a6FcMQyhmPZcLa+uet3VJ8gLn/9svWhJxJYwvE8KsU=
 github.com/volatiletech/inflect v0.0.1/go.mod h1:IBti31tG6phkHitLlr5j7shC5SOo//x0AjDzaJU1PLA=

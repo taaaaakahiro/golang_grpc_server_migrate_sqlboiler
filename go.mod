@@ -8,7 +8,7 @@ require (
 	github.com/lib/pq v1.10.6
 	github.com/sethvargo/go-envconfig v0.9.0
 	github.com/spf13/viper v1.12.0
-	github.com/taaaaakahiro/golang_grpc_proto v0.0.0-20230313111214-d5e78bc5e7b2
+	github.com/taaaaakahiro/golang_grpc_proto v0.0.0-20230313155200-ba5c75b18a85
 	github.com/volatiletech/null/v8 v8.1.2
 	github.com/volatiletech/randomize v0.0.1
 	github.com/volatiletech/sqlboiler/v4 v4.14.1

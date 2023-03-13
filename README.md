@@ -6,7 +6,7 @@
 # ローカルにプライベートリポジトリをimportする
 ## https方式
 $ git config --global url."https://${{ GITHUB_PERSONAL_ACESS_TOKEN }}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
-git config --global url."https://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:x-oauth-basic@github.com/".insteadOf "https://github.com/"
+git config --global url."https://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:x-oauth-basic@github.com/".insteadOf "https://github.com/"
 ## ssh
 $ git config --global url."git@github.com:".insteadOf "https://github.com/"
 
@@ -20,8 +20,9 @@ $ go get github.com/taaaaakahiro/golang_grpc_proto
 
 ## grpc command
 ```sh
-$ grpcurl -plaintext localhost:<PORT> list # list registered service
-$ grpcurl -plaintext localhost:8080 list UserService # list registered method
+$ grpcurl -plaintext localhost:{PORT} list # list registered service
+$ grpcurl -plaintext localhost:{PORT} list UserService # list registered method
+$ grpcurl -plaintext -d '{"id": "1"}' localhost:{PORT} UserService.Get # method call
 ```
 
 ## .gitconfig
