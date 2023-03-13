@@ -6,7 +6,6 @@
 # ローカルにプライベートリポジトリをimportする
 ## https方式
 $ git config --global url."https://${{ GITHUB_PERSONAL_ACESS_TOKEN }}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
-git config --global url."https://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:x-oauth-basic@github.com/".insteadOf "https://github.com/"
 ## ssh
 $ git config --global url."git@github.com:".insteadOf "https://github.com/"
 
