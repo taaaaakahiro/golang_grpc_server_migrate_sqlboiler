@@ -1,7 +1,7 @@
 package main
 
 import (
-	"grpc_func_from_prcivate_repo/pkg/command"
+	"golang_grpc_proto/pkg/command"
 )
 
 //go:generate sqlboiler --wipe psql

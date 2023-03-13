@@ -1,9 +1,9 @@
 package server
 
 import (
-	pb "github.com/taaaaakahiro/golang_grpc_proto/pb/proto"
+	pb "github.com/taaaaakahiro/golang_grpc_proto/pkg/grpc"
+	"golang_grpc_proto/pkg/service"
 	"google.golang.org/grpc"
-	"grpc_func_from_prcivate_repo/pkg/service"
 )
 
 type Server struct {

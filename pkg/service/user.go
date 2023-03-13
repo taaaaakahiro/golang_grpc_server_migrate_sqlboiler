@@ -2,9 +2,9 @@ package service
 
 import (
 	"context"
-	pb "github.com/taaaaakahiro/golang_grpc_proto/pb/proto"
+	pb "github.com/taaaaakahiro/golang_grpc_proto/pkg/grpc"
 	"golang.org/x/exp/slog"
-	"grpc_func_from_prcivate_repo/pkg/usecase"
+	"golang_grpc_proto/pkg/usecase"
 )
 
 type UserService struct {
@@ -20,9 +20,9 @@ func NewUserService(logger *slog.Logger, uc *usecase.UseCase) *UserService {
 	}
 }
 
-func (s *UserService) CreateUser(ctx context.Context, req *pb.RegisterClientRequest) (*pb.RegisterClientResponse, error) {
-	return &pb.RegisterClientResponse{
-		ClientId: "create success!!!",
+func (s *UserService) CreateUser(ctx context.Context, req *pb.RegisterUserRequest) (*pb.RegisterUserResponse, error) {
+	return &pb.RegisterUserResponse{
+		Id: "create success!!!",
 	}, nil
 
 }

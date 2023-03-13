@@ -2,7 +2,7 @@ package service
 
 import (
 	"golang.org/x/exp/slog"
-	"grpc_func_from_prcivate_repo/pkg/usecase"
+	"golang_grpc_proto/pkg/usecase"
 )
 
 type Service struct {

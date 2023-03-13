@@ -4,11 +4,11 @@ import (
 	"context"
 	"fmt"
 	"golang.org/x/exp/slog"
+	"golang_grpc_proto/pkg/config"
+	"golang_grpc_proto/pkg/server"
+	"golang_grpc_proto/pkg/service"
+	"golang_grpc_proto/pkg/usecase"
 	"google.golang.org/grpc/reflection"
-	"grpc_func_from_prcivate_repo/pkg/config"
-	"grpc_func_from_prcivate_repo/pkg/server"
-	"grpc_func_from_prcivate_repo/pkg/service"
-	"grpc_func_from_prcivate_repo/pkg/usecase"
 	"net"
 	"os"
 	"os/signal"
@@ -55,7 +55,7 @@ func run(ctx context.Context) int {
 
 	// run grpc server
 	go func() {
-		logger.InfoCtx(ctx, "starting gRPC server...", "PORT", cfg.Server.Port)
+		logger.InfoCtx(ctx, "Starting gRPC Server", "PORT", cfg.Server.Port)
 		server.GrpcServ.Serve(listener)
 	}()
 
