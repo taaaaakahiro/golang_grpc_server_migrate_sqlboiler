@@ -22,6 +22,7 @@ $ go get github.com/taaaaakahiro/golang_grpc_proto
 $ grpcurl -plaintext localhost:{PORT} list # list registered service
 $ grpcurl -plaintext localhost:{PORT} list UserService # list registered method
 $ grpcurl -plaintext -d '{"id": "1"}' localhost:{PORT} UserService.Get # method call
+$ grpcurl -plaintext -d '{"service": "golang_grpc_server_api"}' localhost:{PORT} grpc.health.v1.Health.Check # health check
 ```
 
 ## .gitconfig

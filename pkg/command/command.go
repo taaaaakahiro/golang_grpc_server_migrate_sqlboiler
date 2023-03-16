@@ -8,7 +8,6 @@ import (
 	"golang_grpc_proto/pkg/server"
 	"golang_grpc_proto/pkg/service"
 	"golang_grpc_proto/pkg/usecase"
-	"google.golang.org/grpc/reflection"
 	"net"
 	"os"
 	"os/signal"
@@ -49,9 +48,6 @@ func run(ctx context.Context) int {
 
 	// init server
 	server := server.NewServer(services)
-
-	// reflectionを設定(grpcurlコマンドを受け付ける設定)
-	reflection.Register(server.GrpcServ)
 
 	// run grpc server
 	go func() {
