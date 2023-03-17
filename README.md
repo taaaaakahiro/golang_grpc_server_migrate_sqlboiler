@@ -25,6 +25,15 @@ $ grpcurl -plaintext -d '{"id": "1"}' localhost:{PORT} UserService.Get # method 
 $ grpcurl -plaintext -d '{"service": "golang_grpc_server_api"}' localhost:{PORT} grpc.health.v1.Health.Check # health check
 ```
 
+## golang-migrate
+```sh
+$ brew install golang-migrate
+$ export POSTGRESQL_URL='postgres://postgres:password@localhost:5432/postgres?sslmode=disable'
+$ migrate create -ext sql -dir ./db/migrations -seq create_XXX_table
+$ migrate -database ${POSTGRESQL_URL} -path ./migrations up
+$ migrate -database ${POSTGRESQL_URL} -path ./migrations down
+```
+
 ## .gitconfig
 ```sh
 ## ssh
