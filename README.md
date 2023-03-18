@@ -34,6 +34,11 @@ $ migrate -database ${POSTGRESQL_URL} -path ./migrations up
 $ migrate -database ${POSTGRESQL_URL} -path ./migrations down
 ```
 
+## sql-boiler
+```shell
+$ make sql
+```
+
 ## .gitconfig
 ```sh
 ## ssh

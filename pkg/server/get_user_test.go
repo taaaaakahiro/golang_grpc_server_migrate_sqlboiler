@@ -7,8 +7,7 @@ import (
 	"testing"
 )
 
-func TestUser_Get(t *testing.T) {
-
+func TestServer_GetUser(t *testing.T) {
 	type args struct {
 		c      context.Context
 		userID string

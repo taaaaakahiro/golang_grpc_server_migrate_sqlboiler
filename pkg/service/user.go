@@ -31,8 +31,8 @@ func (s *UserService) Get(ctx context.Context, req *pb.GetRequest) (*pb.GetRespo
 	}
 
 	user, err := s.uc.User.Get(ctx, id)
-	s.logger.Error("failed to get user", err)
 	if err != nil {
+		s.logger.Error("failed to get user", err)
 		return nil, status.Error(codes.Internal, "unknown error occurred")
 	}
 	if user.ID == 0 {

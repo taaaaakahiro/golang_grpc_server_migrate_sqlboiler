@@ -9,6 +9,7 @@ import (
 	"golang_grpc_proto/pkg/service"
 	"golang_grpc_proto/pkg/usecase"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/test/bufconn"
 	"log"
 	"net"
@@ -24,10 +25,6 @@ var (
 	lis  *bufconn.Listener
 	conn *grpc.ClientConn
 )
-
-func bufDialer(ctx context.Context, address string) (net.Conn, error) {
-	return lis.Dial()
-}
 
 func TestMain(m *testing.M) {
 	ctx := context.Background()
@@ -48,6 +45,7 @@ func TestMain(m *testing.M) {
 	s := service.NewService(logger, uc)
 
 	lis = bufconn.Listen(bufSize)
+
 	// init server
 	testServ := grpc.NewServer()
 	pb.RegisterUserServiceServer(testServ, s.UserService)
@@ -58,7 +56,8 @@ func TestMain(m *testing.M) {
 		}
 	}()
 	// conn server
-	conn, err = grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure())
+	opt := grpc.WithTransportCredentials(insecure.NewCredentials())
+	conn, err = grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), opt)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -69,4 +68,8 @@ func TestMain(m *testing.M) {
 
 	os.Exit(res)
 
+}
+
+func bufDialer(ctx context.Context, address string) (net.Conn, error) {
+	return lis.Dial()
 }
