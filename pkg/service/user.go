@@ -42,7 +42,7 @@ func (s *UserService) Get(ctx context.Context, req *pb.GetRequest) (*pb.GetRespo
 
 	return &pb.GetResponse{
 		Id:   strconv.Itoa(user.ID),
-		Name: user.Name.String,
+		Name: user.Name,
 	}, nil
 
 }
