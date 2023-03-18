@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"golang.org/x/exp/slog"
 	"golang_grpc_proto/pkg/config"
+	"golang_grpc_proto/pkg/infra/persistence"
+	"golang_grpc_proto/pkg/io"
 	"golang_grpc_proto/pkg/server"
 	"golang_grpc_proto/pkg/service"
 	"golang_grpc_proto/pkg/usecase"
@@ -33,6 +35,14 @@ func run(ctx context.Context) int {
 		return exitNG
 	}
 
+	db, err := io.NewDataBase(cfg)
+	if err != nil {
+		logger.Error("failed to connect database", err)
+		return exitNG
+	}
+
+	repositories := persistence.NewRepository(db)
+
 	// init Listener
 	listener, err := net.Listen("tcp", fmt.Sprintf(":%d", cfg.Server.Port))
 	if err != nil {
@@ -41,7 +51,7 @@ func run(ctx context.Context) int {
 	}
 
 	// init UseCase
-	useCases := usecase.NewUseCase()
+	useCases := usecase.NewUseCase(repositories)
 
 	// init Service
 	services := service.NewService(logger, useCases)

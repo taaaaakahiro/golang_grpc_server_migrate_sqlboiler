@@ -1,7 +1,15 @@
 package usecase
 
-type UseCase struct{}
+import (
+	"golang_grpc_proto/pkg/infra/persistence"
+)
 
-func NewUseCase() *UseCase {
-	return &UseCase{}
+type UseCase struct {
+	User *UserUseCase
+}
+
+func NewUseCase(r *persistence.Repository) *UseCase {
+	return &UseCase{
+		User: NewUserUseCase(r),
+	}
 }

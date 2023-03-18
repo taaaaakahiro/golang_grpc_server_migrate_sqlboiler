@@ -7,6 +7,14 @@ import (
 
 type Config struct {
 	Server *serverConfig
+	DB     *databaseConfig
+}
+
+type databaseConfig struct {
+	User     string `env:"POSTGRES_USER,required"`
+	Database string `env:"POSTGRES_DATABASE,required"`
+	Password string `env:"POSTGRES_PASSWORD,required"`
+	Host     string `env:"POSTGRES_HOST,required"`
 }
 
 type serverConfig struct {
