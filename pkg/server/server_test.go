@@ -10,6 +10,8 @@ import (
 	"golang_grpc_proto/pkg/usecase"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/health"
+	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/test/bufconn"
 	"log"
 	"net"
@@ -22,8 +24,9 @@ import (
 const bufSize = 1024 * 1024
 
 var (
-	lis  *bufconn.Listener
-	conn *grpc.ClientConn
+	lis       *bufconn.Listener
+	conn      *grpc.ClientConn
+	healthSrv *health.Server
 )
 
 func TestMain(m *testing.M) {
@@ -49,6 +52,10 @@ func TestMain(m *testing.M) {
 	// init server
 	testServ := grpc.NewServer()
 	pb.RegisterUserServiceServer(testServ, s.UserService)
+
+	healthSrv = health.NewServer()
+	healthpb.RegisterHealthServer(testServ, healthSrv)
+	healthSrv.SetServingStatus(healthCheckStatus, healthpb.HealthCheckResponse_SERVING)
 	// run server
 	go func() {
 		if err := testServ.Serve(lis); err != nil {
